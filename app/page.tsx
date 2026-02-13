@@ -1,65 +1,196 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
+import Navbar from "@/components/Navbar";
+import Terminal from "@/components/Terminal";
+import Footer from "@/components/Footer";
 
 export default function Home() {
+  const [username, setUsername] = useState("");
+  const router = useRouter();
+
+  const handleAnalyze = (e?: React.FormEvent) => {
+    e?.preventDefault();
+    if (!username.trim()) return;
+    router.push(`/analyze?username=${username}`);
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <Navbar />
+      <main className="flex-grow flex flex-col items-center px-4 sm:px-6 relative pt-32 pb-24 min-h-screen">
+        <div
+          className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.05]"
+          style={{
+            backgroundImage: "radial-gradient(#000000 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+          }}
+        ></div>
+        <div className="w-full max-w-4xl mx-auto text-center relative z-10 space-y-12">
+          <div className="space-y-8 flex flex-col items-center">
+            <div className="w-12 h-12 flex items-center justify-center rounded-full bg-zinc-50 dark:bg-zinc-800 border border-zinc-100 dark:border-zinc-700 mb-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-zinc-800 dark:text-white"
+              >
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+              </svg>
+            </div>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-medium tracking-tighter text-black dark:text-white leading-[1.1]">
+              Understand how recruiters
+              <br />
+              see your GitHub.
+            </h1>
+            <p className="text-lg md:text-xl text-zinc-500 dark:text-zinc-400 font-light max-w-2xl mx-auto leading-relaxed">
+              Enter a username to generate a comprehensive portfolio analysis and
+              discover what your code says about you.
+            </p>
+          </div>
+          <div className="w-full max-w-lg mx-auto mt-8">
+            <form className="relative group" onSubmit={handleAnalyze}>
+              <div className="relative flex items-center">
+                <input
+                  className="w-full h-14 pl-5 pr-32 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg text-lg text-black dark:text-white placeholder:text-zinc-400 outline-none focus:border-black dark:focus:border-zinc-600 focus:ring-0 transition-all shadow-sm group-hover:border-zinc-300 dark:group-hover:border-zinc-700"
+                  placeholder="github-username"
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+                <button
+                  className="absolute right-2 top-2 bottom-2 bg-black dark:bg-white text-white dark:text-black px-6 rounded text-sm font-medium hover:opacity-90 transition-opacity flex items-center justify-center shadow-sm"
+                  type="submit"
+                >
+                  Analyze
+                </button>
+              </div>
+            </form>
+            <div className="mt-6 flex justify-center gap-3 text-xs text-zinc-400">
+              <span>Try:</span>
+              <button
+                onClick={() => setUsername("shadcn")}
+                className="hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors"
+              >
+                shadcn
+              </button>
+              <span className="text-zinc-300 dark:text-zinc-700">/</span>
+              <button
+                onClick={() => setUsername("torvalds")}
+                className="hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors"
+              >
+                torvalds
+              </button>
+              <span className="text-zinc-300 dark:text-zinc-700">/</span>
+              <button
+                onClick={() => setUsername("leerob")}
+                className="hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors"
+              >
+                leerob
+              </button>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+        <section className="w-full max-w-5xl mx-auto py-32 px-4 md:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <h2 className="text-4xl md:text-5xl font-medium tracking-tight text-black dark:text-white">
+                Analyze your GitHub like a recruiter
+              </h2>
+              <p className="text-lg text-zinc-500 dark:text-zinc-400">
+                Transparent scoring. Clear signals. Actionable insights.
+              </p>
+              <div className="inline-flex items-center bg-zinc-100 dark:bg-zinc-800 px-3 py-1.5 rounded-md border border-zinc-200 dark:border-zinc-700">
+                <span className="font-mono text-sm text-zinc-600 dark:text-zinc-300">
+                  analyze nirvik
+                </span>
+              </div>
+            </div>
+            <div className="relative">
+              <Terminal username="nirvik" score={78} />
+              <div className="absolute -z-0 -bottom-6 -right-6 w-full h-full border border-dashed border-zinc-200 dark:border-zinc-800 rounded-xl"></div>
+            </div>
+          </div>
+        </section>
+        <section className="w-full max-w-5xl mx-auto py-24 px-4 md:px-8 border-t border-zinc-100 dark:border-zinc-900">
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-3xl md:text-4xl font-medium tracking-tight text-black dark:text-white">
+              We analyze what actually matters
+            </h2>
+            <p className="text-zinc-500 dark:text-zinc-400 max-w-xl mx-auto">
+              Technical benchmarks designed to mirror professional screening
+              workflows.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <FeatureCard
+              title="Activity"
+              description="Commit consistency and contribution streaks across diverse repositories."
+              weight="20%"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+            <FeatureCard
+              title="Project Depth"
+              description="Evaluation of complexity through codebase size, architecture, and feature set."
+              weight="25%"
+            />
+            <FeatureCard
+              title="Documentation"
+              description="Assessment of README clarity, installation guides, and inline code comments."
+              weight="15%"
+            />
+            <FeatureCard
+              title="Impact"
+              description="Star counts, fork rates, and real-world utility of public contributions."
+              weight="15%"
+            />
+            <FeatureCard
+              title="Tech Diversity"
+              description="Breadth of languages, frameworks, and tooling proficiency shown in history."
+              weight="10%"
+            />
+            <FeatureCard
+              title="Professionalism"
+              description="Semantic commit messages, branch hygiene, and issue management."
+              weight="15%"
+            />
+          </div>
+        </section>
       </main>
+      <Footer />
+    </>
+  );
+}
+
+function FeatureCard({
+  title,
+  description,
+  weight,
+}: {
+  title: string;
+  description: string;
+  weight: string;
+}) {
+  return (
+    <div className="p-8 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-transparent flex flex-col justify-between h-full space-y-4">
+      <div className="space-y-2">
+        <h3 className="font-semibold text-black dark:text-white">{title}</h3>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
+          {description}
+        </p>
+      </div>
+      <div className="text-[10px] font-mono uppercase tracking-wider text-zinc-400">
+        Weight: {weight}
+      </div>
     </div>
   );
 }
