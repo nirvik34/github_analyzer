@@ -14,17 +14,12 @@
   --color-primary: var(--primary);
   --color-background-light: var(--background-light);
   --color-background-dark: var(--background-dark);
-  
+
   --font-display: var(--font-inter);
   --font-mono: var(--font-jetbrains-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+
 
 body {
   background: var(--background);

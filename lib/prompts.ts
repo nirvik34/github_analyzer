@@ -49,6 +49,8 @@ IMPORTANT: Return ONLY valid JSON in this EXACT format (no markdown, no code blo
   "topRoles": ["role1", "role2", "role3"],
   "strengths": ["strength1", "strength2", "strength3"],
   "weaknesses": ["weakness1", "weakness2"],
-  "summary": "2-3 sentence recruiter summary highlighting key selling points and concerns"
+  "summary": "2-3 sentence recruiter summary highlighting key selling points and concerns",
+  "confidenceScore": 85,
+  "confidenceReason": "Brief explanation of the score"
 }`;
 }

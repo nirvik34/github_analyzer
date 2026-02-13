@@ -10,6 +10,10 @@ import ProjectCard from "@/components/ProjectCard";
 import StrengthWeakness from "@/components/StrengthWeakness";
 import CommitChart from "@/components/CommitChart";
 
+import ScoreRadar from "@/components/ScoreRadar";
+import ScoreBreakdown from "@/components/ScoreBreakdown";
+import RecruiterConfidence from "@/components/RecruiterConfidence";
+
 function AnalyzeContent() {
     const searchParams = useSearchParams();
     const username = searchParams.get("username");
@@ -87,6 +91,9 @@ function AnalyzeContent() {
     const strengths = aiData.strengths || [];
     const weaknesses = aiData.weaknesses || [];
     const summary = aiData.summary || data?.insights || "No summary available.";
+    const confidenceScore = aiData.confidenceScore || 0;
+    const confidenceReason = aiData.confidenceReason || "Analysis incomplete.";
+    const breakdown = data?.score?.breakdown || {};
 
     return (
         <div className="min-h-screen bg-[#f5f5f4] text-black font-sans selection:bg-zinc-200">
@@ -101,7 +108,7 @@ function AnalyzeContent() {
 
             <main className="max-w-[800px] mx-auto px-8 py-20 md:py-24">
                 {/* Header Section */}
-                <header className="mb-24 flex flex-col md:flex-row md:justify-between md:items-start">
+                <header className="mb-16 flex flex-col md:flex-row md:justify-between md:items-start">
                     <div className="flex flex-col items-start">
                         <h1 className="text-zinc-500 text-xs font-bold uppercase tracking-[0.2em] mb-6">
                             Portfolio Analysis
@@ -132,6 +139,11 @@ function AnalyzeContent() {
                     </div>
                 </header>
 
+                {/* Recruiter Confidence - Headline Metric */}
+                <section className="mb-20">
+                    <RecruiterConfidence score={confidenceScore} reason={confidenceReason} />
+                </section>
+
                 {/* Suggested Roles */}
                 {topRoles.length > 0 && (
                     <section className="mb-20">
@@ -149,7 +161,7 @@ function AnalyzeContent() {
                     </section>
                 )}
 
-                {/* Key Metrics Grid */}
+                {/* Visuals Grid: Radar & Commit Chart */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
                     <section>
                         <h2 className="text-sm font-bold text-black uppercase tracking-[0.1em] border-b border-zinc-200 pb-4 mb-4">
@@ -168,61 +180,20 @@ function AnalyzeContent() {
                     </section>
 
                     <section>
-                        <h2 className="text-lg font-bold text-black uppercase tracking-[0.05em] border-b border-zinc-200 pb-4 mb-8">
-                            Key Signals
+                        <h2 className="text-sm font-bold text-black uppercase tracking-[0.1em] border-b border-zinc-200 pb-4 mb-8">
+                            Skill Radar
                         </h2>
-                        <div className="space-y-6">
-                            <div>
-                                <div className="flex justify-between items-baseline mb-2">
-                                    <span className="text-black text-lg font-medium">
-                                        Documentation Quality
-                                    </span>
-                                    <span className="text-black font-mono text-lg">
-                                        {Math.round(((data?.score?.breakdown?.documentation || 0) / 20) * 100)}%
-                                    </span>
-                                </div>
-                                <div className="w-full bg-zinc-100 rounded-full h-1.5 overflow-hidden">
-                                    <div
-                                        className="bg-black h-full rounded-full"
-                                        style={{ width: `${Math.round(((data?.score?.breakdown?.documentation || 0) / 20) * 100)}%` }}
-                                    />
-                                </div>
-                            </div>
-                            <div>
-                                <div className="flex justify-between items-baseline mb-1">
-                                    <span className="text-black text-lg font-medium">
-                                        Impact & Activity
-                                    </span>
-                                    <span className="text-black font-mono text-lg">
-                                        {Math.round(((data?.score?.breakdown?.impact || 0) / 15) * 100)}%
-                                    </span>
-                                </div>
-                                <div className="w-full bg-zinc-100 rounded-full h-1.5 overflow-hidden">
-                                    <div
-                                        className="bg-black h-full rounded-full"
-                                        style={{ width: `${Math.round(((data?.score?.breakdown?.impact || 0) / 15) * 100)}%` }}
-                                    />
-                                </div>
-                            </div>
-                            <div>
-                                <div className="flex justify-between items-baseline mb-1">
-                                    <span className="text-black text-lg font-medium">
-                                        Best Practices
-                                    </span>
-                                    <span className="text-black font-mono text-lg">
-                                        {Math.round(((data?.score?.breakdown?.bestPractices || 0) / 30) * 100)}%
-                                    </span>
-                                </div>
-                                <div className="w-full bg-zinc-100 rounded-full h-1.5 overflow-hidden">
-                                    <div
-                                        className="bg-black h-full rounded-full"
-                                        style={{ width: `${Math.round(((data?.score?.breakdown?.bestPractices || 0) / 30) * 100)}%` }}
-                                    />
-                                </div>
-                            </div>
-                        </div>
+                        <ScoreRadar breakdown={breakdown} />
                     </section>
                 </div>
+
+                {/* Detailed Score Breakdown */}
+                <section className="mb-20">
+                    <h2 className="text-lg font-bold text-black uppercase tracking-[0.05em] border-b border-zinc-200 pb-4 mb-8">
+                        Detailed Score Breakdown
+                    </h2>
+                    <ScoreBreakdown breakdown={breakdown} />
+                </section>
 
                 {/* Recruiter Analysis */}
                 <section className="mb-20">
@@ -233,7 +204,7 @@ function AnalyzeContent() {
                         </h2>
                     </div>
 
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-4 mb-8">
                         <h3 className="text-xs font-bold text-zinc-400 uppercase tracking-widest">
                             Recruiter Summary
                         </h3>

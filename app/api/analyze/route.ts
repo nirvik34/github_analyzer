@@ -19,7 +19,7 @@ export async function POST(req: Request) {
             fetchCommitActivity(username)
         ]);
 
-        const score = calculateScore(repos);
+        const score = calculateScore(repos, events, profile);
         const topProjects = rankTopProjects(repos);
         const languages = extractLanguages(repos);
 
