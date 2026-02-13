@@ -357,13 +357,3 @@ https://drive.google.com/file/d/1IApSphkXTxpsJufibv3PTksnnck9phGr/view?usp=shari
  CSE (AI & Robotics)
  VIT Chennai
 
- ---
-
- If you want, I can now:
-
- * 🔥 Upgrade this into a visually stunning README (badges + animations)
- * 💎 Add shields.io badges
- * 🎯 Optimize for judges’ first 30 seconds impression
- * 🧠 Add a “Why This Wins” section
-
- Tell me how aggressive you want the presentation to be.
